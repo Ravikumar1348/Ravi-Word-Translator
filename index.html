@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Numbered Word Translator</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+      font-weight: bold;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: white;
+      padding: 20px;
+    }
+    textarea {
+      width: 100%;
+      font-size: 18px;
+      font-family: 'Times New Roman', serif;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    #inputText {
+      height: 100px;
+    }
+    #outputText {
+      height: 150px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      font-family: 'Times New Roman', serif;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      margin-right: 10px;
+    }
+    select {
+      padding: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      font-family: 'Times New Roman', serif;
+      border-radius: 6px;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  
+  <h1>Welcome to Ravi Website</h1>
+
+  <h2>🌐 Numbered Word Translator</h2>
+
+  <textarea id="inputText" placeholder="Enter words or paragraph here"></textarea><br>
+
+  <button onclick="convertToList()">Convert</button>
+  <button onclick="copyText()">Copy Text</button>
+
+  <label for="langSelect">Translate to:</label>
+  <select id="langSelect">
+    <option value="hi">Hindi</option>
+    <option value="en">English</option>
+  </select>
+  <button onclick="translateText()">Translate</button>
+
+  <h3>📋 Numbered & Translated List:</h3>
+  <textarea id="outputText" readonly placeholder="Converted list will appear here..."></textarea>
+
+  <script>
+    function convertToList() {
+      const input = document.getElementById("inputText").value;
+      const words = input.trim().split(/[ ,\n]+/);
+      const output = document.getElementById("outputText");
+
+      let result = "";
+
+      words.forEach((word, index) => {
+        if (word.trim() !== "") {
+          result += `${index + 1}. ${word.trim()}\n`;
+        }
+      });
+
+      output.value = result.trim();
+    }
+
+    function copyText() {
+      const textArea = document.getElementById("outputText");
+      textArea.select();
+      textArea.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      alert("Text copied!");
+    }
+
+    function translateText() {
+      const lang = document.getElementById("langSelect").value;
+      const text = document.getElementById("outputText").value;
+      const baseUrl = "https://translate.google.com/?sl=auto&tl=" + lang + "&text=";
+      const url = baseUrl + encodeURIComponent(text);
+      window.open(url, '_blank');
+    }
+  </script>
+
+</body>
+</html>
